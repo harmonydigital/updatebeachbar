@@ -10,6 +10,7 @@
     padding:0px;
     z-index: 999;
     background-color: black;
+    /* display: block !important; */
    
 }
 button#btnFullScreen svg {
@@ -44,12 +45,13 @@ button#btnFullScreen svg {
 .validation .content img {
     display: block;
     margin: 0 auto;
-    width: 95px;
-     transition: .3s;
+    width: auto;
+    transition: .3s;
+    max-width: 220px;
 
 }
 .content-text h1 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     text-align: left;
     font-weight: 700;
 }
@@ -65,9 +67,9 @@ button#btnFullScreen svg {
 
 .validation form {
     width: 85%;
-    margin: 70px auto;
+    margin: 35px auto;
     position: relative; 
-   
+    max-width: 365px;
 }
 form img { 
     position: absolute;
@@ -75,17 +77,31 @@ form img {
     width: 14px;
     left: 18px;z-index: 0;
     
-}select:invalid { color: red; }
-.validation button {
-    width: 190px;
-    margin: 15px auto;
-    display: block;
-    background-color: #FED30A;
-    color: black;
-    height: 40px;
-    border-radius: 40px;
-    font-weight: 700;
+}
+img.boy {
+    width: 60px;
+    height: auto;
+    margin: 0;
     position: relative;
+    bottom: 10px;
+    left: 0;
+}
+select:invalid { color: red; }
+.validation button {
+    background: #ff5400;
+    color: white;
+    /* border: 1px solid; */
+    font-size: 1.0rem;
+    border-radius: 20px;
+    height: 55px;
+    max-width: 370px;
+    padding: 0 25px;
+    margin: 10px auto;
+    text-transform: capitalize;
+    font-weight: bold;
+    font-family: 'Lexend Deca', sans-serif;
+    width: 280px;
+    display: block;
 }
 .validation button img {
     left: inherit;

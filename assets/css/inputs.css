@@ -9,14 +9,12 @@ input,select {
     border-radius: 0 40px 40px 0;
     box-shadow: none;
     height: 50px;   
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 300;
     cursor: pointer;
     background-color: white;
 }
-.modal-container.show .mylabel{
-    margin-bottom: 15px;
-}
+
 select {
     appearance: none;
     outline: 0;
@@ -34,7 +32,7 @@ input:focus-visible {
 input::placeholder  {
     font-weight: bold;
     opacity: .5;
-    color:#4a5667; 
+    color:#8B9398; 
     margin-left: 5%;
     opacity: 1;
     font-weight: 300;
@@ -42,33 +40,6 @@ input::placeholder  {
   
    
 }
-
-
-input::-webkit-input-placeholder { /* Edge */
-    color: #73859E;
-    padding: 20px ;
-      font-family: 'Lexend Deca', sans-serif;
-      font-weight:300;
-  
-  }
-  
-  input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #73859E;
-    padding: 20px 10px;
-      font-family: 'Lexend Deca', sans-serif;
-      font-weight:300;
-  
-  
-  }
-  
-  input::placeholder {
-    color: #73859E;
-    padding: 20px 10px;
-      font-family: 'Lexend Deca', sans-serif;
-      font-weight:300;
-  
-  
-  }
 .mylabel{
     display: flex; align-items: center; 
     width: 100%;
