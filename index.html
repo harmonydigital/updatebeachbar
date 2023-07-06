@@ -172,7 +172,7 @@
   <div id="categories" class="categories"> </div>
 
   <!-- MODAL -->
-  <div class="modal-container">
+  <div class="modal-container" id="modalcontainer">
     <div class="modal">
       <div class="controls"> 
         <button onclick="modalToggle()"><svg class="svg-inline--fa fa-chevron-left" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"></path></svg><!-- <i class="fa-solid fa-chevron-left"></i> Font Awesome fontawesome.com --></button>
@@ -193,7 +193,7 @@
           <label style="height:48px;">
             <i class="fa-brands fa-product-hunt"></i>   
            </label>
-          <input id="m-nome" type="text" required />
+          <input name="name" id="m-nome" type="text" required />
         </div> 
  
     
@@ -202,7 +202,7 @@
         <div class="mylabel">
           <label style="height:48px;">    
             <i class="fa-solid fa-dollar-sign"></i><!-- <img src="assets/images/inputs/whats.png" style="margin-top: 16px;">   -->  </label>
-           <input id="m-price" type="number" step="0.01"   required />
+           <input  name="price" id="m-price" type="number" step="0.01"   required />
 
 
 
@@ -216,7 +216,14 @@
   <div id="msgLoad" class="msgLoad">
     <img src="assets/images/logo.png">
     <h3>Aguarde </h3>
-    <p>Estamos atizando seu cardápio!</p>
+    <p>Estamos atualizando seu cardápio!</p>
+    <img src="assets/images/loading.gif">
+    <!-- <button>Cancelar</button>  -->
+  </div>
+  <div id="msgLoading" class="msgLoad">
+    <img src="assets/images/logo.png">
+    <h3>Aguarde </h3>
+    <p>atualizando seu cardápio!</p>
     <img src="assets/images/loading.gif">
     <!-- <button>Cancelar</button>  -->
   </div>
@@ -260,7 +267,7 @@
  <script type="module">
 
   const firebaseConfig = {
-      apiKey: "AIzaSyAyxC6S9lIs2q6MXPJzB4rpjod3HbRXJgU",
+    apiKey: "AIzaSyAyxC6S9lIs2q6MXPJzB4rpjod3HbRXJgU",
       authDomain: "harmonyfoodapp.firebaseapp.com",
       databaseURL: "https://harmonyfoodapp-default-rtdb.firebaseio.com",
       projectId: "harmonyfoodapp",
@@ -289,594 +296,973 @@
 
 
 
- //UPDATE CARDAPIO
-  
-
-
+ //UPDATE CARDAPIO 
 formupdateMenu.addEventListener('submit', function(e){
   e.preventDefault()  
-   
-  console.log('atualizando..',data)
-  console.log(msgLoadContainer)
-   msgLoadContainer.style.cssText='display:flex;'
+  msgLoadContainer.style.cssText='display:flex;'
 
   db.collection('cardapio').doc('cardapioatual').set({dataProd:data})
-  // db.collection('cardapio').doc('cardapioatual').set( {dataProd: [ 
-  //     { 
-  //     id:'0C',
-  //     name:'Para Comer', 
-  //     key:'Comer', 
-  //     image:'assets/images/burguer.png',
-  //     image2:'assets/images/burguer.png',
-  //         itens:[{ 
-  //             id:'01',
-  //             name:'Porções', 
-  //             products:[{
-  //                 id:'150',
-  //                 name:'Porção Camarão Paulista', 
-  //                 price:90, 
-  //                 img:'assets/images/produtos/camaraopaulista.png',
-  //                 quantidade:0,
-  //             },{
-  //                 id:'151',
-  //                 name:'Porção Camarão Dorê', 
-  //                 price:75, 
-  //                 img:'assets/images/produtos/camaraodore.png',
-  //                 quantidade:0,
-
-
-                  
-  //             },{
-  //                 id:'152',
-  //                 name:'Porção Lula Dorê', 
-  //                 price:80,
-  //                 img:'assets/images/produtos/luladore.png',
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'153',
-  //                 name:'Porção Peixe Tilápia', 
-  //                 img:'assets/images/produtos/tilapia.png',
-
-  //                 price:65,
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'154',
-  //                 name:'Porção Peixe Cação', 
-  //                 img:'assets/images/produtos/cacao.png',
-
-  //                 price:65,
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'155',
-  //                 name:'Porção Peixe Pescada', 
-  //                 img:'assets/images/produtos/pescada.png', 
-  //                 price:65,
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'156',
-  //                 name:'Porção Peixe Merluza', 
-  //                 img:'assets/images/produtos/merluza.png', 
-  //                 price:65,
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'158',
-  //                 name:'Porção Peixe Porquinho', 
-  //                 img:'assets/images/produtos/porquinho.png', 
-  //                 price:65,
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'159',
-  //                 name:'Fritas', 
-  //                 img:'assets/images/produtos/fritas.png', 
-
-  //                 price:35,
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'160',
-  //                 name:'Fritas com Queijo', 
-  //                 img:'assets/images/produtos/fritasqueijo.png', 
-
-  //                 price:40,
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'161',
-  //                 name:'Porção Mandioca', 
-  //                 img:'assets/images/produtos/mandioca.png', 
-
-  //                 price:35,
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'162',
-  //                 name:'Porção Mandioca com Queijo', 
-  //                 img:'assets/images/produtos/mandiocaqueijo.png', 
-
-  //                 price:40,
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'164',
-  //                 name:'Porção Calabresa', 
-  //                 img:'assets/images/produtos/calabresa.png', 
-
-  //                 price:50,
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'171',
-  //                 name:'Molho Extra', 
-  //                 img:'assets/images/produtos/molhoextra.png', 
-
-  //                 price:3, 
-  //                 quantidade:0,
-
-
-  //             },{
-  //                 id:'172',
-  //                 name:'Pão Extra', 
-  //                 img:'assets/images/produtos/paoextra.png', 
-
-  //                 price:3, 
-  //                 quantidade:0,
-
-
-  //             }
-  //         ]
-  //         },{ 
-  //             id:'03',
-  //             name:'Pastéis',
-  //             products:[{
-  //                 id:'90',
-  //                 name:'Pastel Carne ', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:13,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'91',
-  //                 name:'Pastel Queijo', 
-  //                 img:'assets/images/produtos/pastelqueijo.png',  
-
-  //                 price:12,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'92',
-  //                 name:'Pastel Bauru', 
-  //                 img:'assets/images/produtos/pastelbauru.png',  
-
-  //                 price:12,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'93',
-  //                 name:'Pastel Calabresa', 
-  //                 img:'assets/images/produtos/pastelcalabresa.png',  
-
-  //                 price:12,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'94',
-  //                 name:'Pastel Frango', 
-  //                 img:'assets/images/produtos/pastelfrango.png',  
-
-  //                 price:12,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'95',
-  //                 name:'Pastel Pizza', 
-  //                 img:'assets/images/produtos/pastelpizza.png',  
-
-  //                 price:12,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'96',
-  //                 name:'Pastel Brócolis', 
-  //                 img:'assets/images/produtos/pastelbrocolis.png',  
-
-  //                 price:12,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'98',
-  //                 name:'Pastel Carne com Queijo', 
-  //                 img:'assets/images/produtos/pastelcarnequeijo.png',  
-
-  //                 price:15,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'14',
-  //                 name:'Pastel Brócolis com Queijo', 
-  //                 img:'assets/images/produtos/pastelbrocolisqueijo.png',  
-
-  //                 price:14,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'100',
-  //                 name:'Pastel Frango com Catupiry', 
-  //                 price:14,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'101',
-  //                 name:'Pastel Palmito', 
-  //                 price:12,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'101',
-  //                 name:'Pastel Camarão', 
-  //                 price:16,
-  //                 quantidade:0,
-  //             }
-  //         ]
-  //         } ,{  
-  //             id:'04',
-  //             name:'Pastéis Doces',
-  //             products:[{
-  //                 id:'103',
-  //                 name:'Pastel Banana com Nutella', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:12,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'104',
-  //                 name:'Pastel Chocolate com Nutella', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:14,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'105',
-  //                 name:'Pastel Chocolate com Banana', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:15,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'106',
-  //                 name:'Pastel Chocolate com Morango', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:15,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'107',
-  //                 name:'Pastel Leite Condensado c/ Coco', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:14,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'108',
-  //                 name:'Pastel Nutella com Morango', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'109',
-  //                 name:'Pastel Nutella com Banana', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             }       
-  //         ]
-  //         } ,{  
-  //             id:'05',
-  //             name:'Tapiocas',
-  //             products:[{
-  //                 id:'60',
-  //                 name:'Tapioca Carne', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'61',
-  //                 name:'Tapioca Queijo', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'62',
-  //                 name:'Tapioca Bauru', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'63',
-  //                 name:'Tapioca Frango', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'64',
-  //                 name:'Tapioca Pizza', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'65',
-  //                 name:'Tapioca Brócolis', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'67',
-  //                 name:'Tapioca Carne com Queijo', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:18,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'68',
-  //                 name:'Tapioca Brócolis com Queijo', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:18,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'69',
-  //                 name:'Tapioca Frango com Queijo', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:18,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'70',
-  //                 name:'Tapioca Palmito', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'71',
-  //                 name:'Tapioca Camarão', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:18,
-  //                 quantidade:0,
-  //             }       
-  //         ]
-  //         } ,{  
-  //             id:'06',
-  //             name:'Tapiocas Doces',
-  //             products:[{
-  //                 id:'72',
-  //                 name:'Tapioca Banana com Canela', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:14,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'73',
-  //                 name:'Tapioca Chocolate / Nutella', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'74',
-  //                 name:'Tapioca Chocolate com Banana', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-  //                 price:17,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'75',
-  //                 name:'Tapioca Chocolate com Morango', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-  //                 price:17,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'76',
-  //                 name:'Tapioca Leite Condensado c/ Coco', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-  //                 price:18,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'77',
-  //                 name:'Tapioca Nutella com Morango', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-  //                 price:17,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'78',
-  //                 name:'Tapioca Nutella com Banana', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-  //                 price:18,
-  //                 quantidade:0,
-  //             }       
-  //         ]
-  //         },{  
-  //             id:'07',
-  //             name:'Panquecas',
-  //             products:[{
-  //                 id:'30',
-  //                 name:'Panqueca Carne', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'31',
-  //                 name:'Panqueca Queijo', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:14,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'32',
-  //                 name:'Panqueca Bauru', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'33',
-  //                 name:'Panqueca Frango', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'34',
-  //                 name:'Panqueca Pizza', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'37',
-  //                 name:'Panqueca Carne com Queijo', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:18,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'38',
-  //                 name:'Panqueca Brócolis com Queijo', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:18,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'39',
-  //                 name:'Panqueca Frango com Catupiry', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:18,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'40',
-  //                 name:'Panqueca Palmito', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:16,
-  //                 quantidade:0,
-  //             },{
-  //                 id:'41',
-  //                 name:'Panqueca Camarão', 
-  //                 img:'assets/images/produtos/pastelcarne.png',  
-
-  //                 price:18,
-  //                 quantidade:0,
-  //             }       
-  //         ]
-  //         }
-
-  //         ]
-  //     },{ 
-  //     id:'1C',
-  //     name:'Para Beber', 
-  //     key:'Beber',
-  //     image:'assets/images/glass.png',
-  //     image2:'assets/images/glass.png',
-
-  //         itens:[{ 
-  //             id:'4',
-  //             name:'Bebidas', 
-  //             products:[{
-  //                 id:'1',
-  //                 key:'',
-  //                 name:'Água sem Gás', 
-  //                 price:4,
-  //                 quantidade:0, 
-  //             },{
-  //                 id:'2',
-  //                 key:'',
-  //                 name:'Água com Gás', 
-  //                 price:5,
-  //                 quantidade:0, 
-  //             },{
-  //                 id:'3',
-  //                 key:'',
-  //                 name:'H20 Limão', 
-  //                 price:8,
-  //                 quantidade:0, 
-  //             },{
-  //                 id:'5',
-  //                 key:'',
-  //                 name:'Refrigerante lata', 
-  //                 price:6,
-  //                 quantidade:0, 
-  //             },{
-  //                 id:'6',
-  //                 key:'',
-  //                 name:'Refrigerante Zero lata ', 
-  //                 price:7,
-  //                 quantidade:0, 
-  //             },{
-  //                 id:'7',
-  //                 key:'',
-  //                 name:'Schweppes', 
-  //                 price:8,
-  //                 quantidade:0, 
-  //             },{
-  //                 id:'8',
-  //                 key:'',
-  //                 name:'Tônica', 
-  //                 price:8,
-  //                 quantidade:0, 
-  //             },{
-  //                 id:'9',
-  //                 key:'',
-  //                 name:'Copo c/ Gelo', 
-  //                 price:5,
-  //                 quantidade:0, 
-  //             },{
-  //                 id:'10',
-  //                 key:'',
-  //                 name:'Copo c/ Gelo e Limão', 
-  //                 price:5,
-  //                 quantidade:0, 
-  //             }
-  //         ]
+ 
+  // db.collection('cardapio').doc('cardapioatual').set( {dataProd:  
+  //   [
+  //   {
+  //       "key": "beber",
+  //       "itens": [{
+
+  //               "name": "Copão de Whisky",
+  //               "id": generateID(),
+  //               "products": [
+  //                   {
+  //                       "quantidade": 0,
+  //                       "name": "Adicional + Red Bull",
+  //                       "id": generateID(),
+  //                       "img": "assets/images/produtos/energeticoredbull.png",
+  //                       "price": 10
+  //                   },
+  //                   {
+  //                       "img": "assets/images/produtos/copocavalobranco.png",
+  //                       "price": "25",
+  //                       "id": generateID(),
+  //                       "name": "Copão Whisky Cavalo Branco",
+  //                       "quantidade": 0
+  //                   },
+  //                   {
+  //                       "price": "30.00",
+  //                       "img": "assets/images/produtos/coporedlabel.png",
+  //                       "quantidade": 0,
+  //                       "name": "Copão Whisky Red Label 1L",
+  //                       "id": generateID()
+  //                   },
+  //                   {
+  //                       "quantidade": 0,
+  //                       "id":generateID(),
+  //                       "name": "Copão Whisky Jack Daniels",
+  //                       "price": "35.00",
+  //                       "img": "assets/images/produtos/copojackdaniels.png"
+  //                   },
+  //                   {
+  //                       "img": "assets/images/produtos/copopassport.png",
+  //                       "quantidade": 0,
+  //                       "name": "Copão Whisky Passport",
+  //                       "price": 15,
+  //                       "id": generateID()
+  //                   },
+  //                   {
+  //                       "id": generateID(),
+  //                       "name": "Copão Whisky Passport Mel",
+  //                       "price": 20,
+  //                       "quantidade": 0,
+  //                       "img": "assets/images/produtos/copopassportmel.png"
+  //                   }
+  //               ]
+
+  //             },{
+  //               "id": generateID(),  
+  //               "name": "Whisky",
+  //               "products": [
+  //                   {
+  //                       "quantidade": 0,
+  //                       "name": "Whisky Cavalo Branco",
+  //                       "id":generateID(),
+  //                                               "img": "assets/images/produtos/whiskycavalobranco.png",
+  //                       "price": "125.00"
+  //                   },
+  //                   {
+  //                       "price": "135.00",
+  //                       "img": "assets/images/produtos/whiskredlabel.png",
+  //                       "name": "Whisky Red Label 1L",
+  //                       "id":generateID(),
+  //                                               "quantidade": 0
+  //                   },
+  //                   {
+  //                       "img": "assets/images/produtos/whiskblacklabel.png",
+  //                       "price": "220.00",
+  //                       "quantidade": 0,
+  //                       "name": "Whisky Black Label",
+  //                       "id":generateID(),
+  //                                        },
+  //                   {
+  //                       "img": "assets/images/produtos/whiskjackdaniels.png",
+  //                       "price": 160,
+  //                       "name": "Whisky Jack Daniels",
+  //                       "id":generateID(),
+  //                                               "quantidade": 0
+  //                   },
+  //                   {
+  //                       "img": "assets/images/produtos/Whiskyballantines.png",
+  //                       "quantidade": 0,
+  //                       "price": 120,
+  //                       "name": "Whisky Ballantines",
+  //                       "id":generateID(),
+  //                                        },
+  //                   {
+  //                       "img": "assets/images/produtos/whiskybuchanans.png",
+  //                       "quantidade": 0,
+  //                       "price": 200,
+  //                       "name": "Whisky Buchanans",
+  //                       "id":generateID(),
+  //                                        },
+  //                   {
+  //                       "id":generateID(),
+  //                                               "name": "Whisky Gold Label",
+  //                       "img": "assets/images/produtos/whiskygoldlabel.png",
+  //                       "price": 250,
+  //                       "quantidade": 0
+  //                   },
+  //                   {
+  //                       "id":generateID(),
+  //                                               "name": "Whisky Passport",
+  //                       "img": "assets/images/produtos/whiskpassport.png",
+  //                       "price": "55.00",
+  //                       "quantidade": 0
+  //                   },
+  //                   {
+  //                       "price": 52,
+  //                       "id": "73",
+  //                       "quantidade": 0,
+  //                       "name": "Whisky Passport Mel",
+  //                       "img": "assets/images/produtos/whiskypassportmel.png"
+  //                   },
+  //                   {
+  //                       "name": "Whisky Chivas Regal",
+  //                       "quantidade": 0,
+  //                       "img": "assets/images/produtos/whiskychivasregal.png",
+  //                       "id": "629",
+  //                       "price": 170
+  //                   },
+  //                   {
+  //                       "id": "68",
+  //                       "quantidade": 0,
+  //                       "price": 25,
+  //                       "name": "Whisky Famuous One",
+  //                       "img": "assets/images/produtos/whiskfamuousonel.png"
+  //                   },
+  //                   {
+  //                       "quantidade": 0,
+  //                       "img": "assets/images/produtos/whiskoldstar.png",
+  //                       "name": "Whisky Old Star",
+  //                       "price": 20,
+  //                       "id": "804"
+  //                   },
+  //                   {
+  //                       "id": "437",
+  //                       "quantidade": 0,
+  //                       "name": "Whisky Black Stone",
+  //                       "img": "assets/images/produtos/whiskblackstone.png",
+  //                       "price": 35
+  //                   },
+  //                   {
+  //                       "img": "assets/images/produtos/wiskgold.png",
+  //                       "name": "Whisky Master Gold",
+  //                       "quantidade": 0,
+  //                       "price": 25,
+  //                       "id": "656"
+  //                   }
+  //               ]
+  //             },{
+                
+  //                 id:generateID(),
+
+  //                 name:'Gin',
+  //                 products:[{
+  //                     id:generateID(),
+
+  //                     name:'Gin Tanqueray', 
+  //                     img:'assets/images/produtos/gin.png',  
+  //                     price:199,
+  //                     quantidade:0,
+  //                 },{
+  //                     id:generateID(),
+
+  //                     name:'Gin Rose', 
+  //                     img:'assets/images/produtos/ginrose.png',  
+  //                     price:37,
+  //                     quantidade:0,
+  //                 },{
+  //                     id:generateID(),
+
+  //                     name:'Gin Flowers', 
+  //                     img:'assets/images/produtos/ginflowers.png',  
+  //                     price:9.5,
+  //                     quantidade:0,
+  //                 }]      
               
-  //         },{ 
-  //             id:'05',
-  //             name:'Alcoolicas',
-  //             products:[{
-  //                 id:'130',
-  //                 name:'Cerveja Pilsen Lata', 
-  //                 price:6, 
-  //                 quantidade:0,
-  //             }]
-  //         },{ 
-  //             id:'06',
-  //             name:'Mais',
-  //             products:[{
-  //                 id:'999',
-  //                 name:'limao', 
-  //                 price:75,
-  //                 quantidade:0, 
+              
+  //             },{
+  //               "name": "Copão de Vodka",
+  //               "id": generateID(),
+  //               "products": [
+  //                   {
+  //                       "quantidade": 0,
+  //                       "id": generateID(),
+  //                       "price": 15,
+  //                       "name": "Copão de Smirnoff",
+  //                       "img": "assets/images/produtos/coposmirnoff.png"
+  //                   },
+  //                   {
+  //                       "id": generateID(), 
+  //                       "price": 10,
+  //                       "img": "assets/images/produtos/copoaskovsabor.png",
+  //                       "name": "Copão de Askov de Sabor",
+  //                       "quantidade": 0
+  //                   }
+  //               ]
 
-  //             } ]
-  //         }
-      
-  //         ]
-  //     }
-      
+  //             },{
+  //               "id": generateID(),
+  //               "name": "Vodkas",
+  //               "products": [
+  //                   {
+  //                       "price": 13,
+  //                       "id": generateID(),                      
+  //                       "img": "assets/images/produtos/smirnoffice.png",
+  //                       "name": "Vodka Smirnoff Ice Long Neck",
+  //                       "quantidade": 0
+  //                   },
+  //                   {
+  //                       "price": 9.5,
+  //                       "id": generateID(),                      "name": "Vodka Smirnorff Lata",
+  //                       "img": "assets/images/produtos/smirnofficelata.png",
+  //                       "quantidade": 0
+  //                   },
+  //                   {
+  //                       "quantidade": 0,
+  //                       "name": "Vodka Smirnoff 1L",
+  //                       "id": generateID(),                      "price": 49,
+  //                       "img": "assets/images/produtos/vodkasmirnoff1l.png"
+  //                   },
+  //                   {
+  //                       "img": "assets/images/produtos/ousadia.png",
+  //                       "id": generateID(),                     "price": 7.5,
+  //                       "quantidade": 0,
+  //                       "name": "Vodka Ousadia"
+  //                   },
+  //                   {
+  //                       "img": "assets/images/produtos/smirnoffsabor.png",
+  //                       "quantidade": 0,
+  //                       "price": 58,
+  //                       "name": "Vodka Smirnorff Sabor",
+  //                       "id": generateID(),                 },
+  //                   {
+  //                       "id": generateID(),                      "name": "Vodka Askov",
+  //                       "img": "assets/images/produtos/askov.png",
+  //                       "price": 18,
+  //                       "quantidade": 0
+  //                   },
+  //                   {
+  //                       "img": "assets/images/produtos/vodkaaskovsabor.png",
+  //                       "id": generateID(),                      
+  //                       "price": 18,
+  //                       "name": "Vodka Askov Sabor 1L",
+  //                       "quantidade": 0
+  //                   }
+  //               ]
+  //             },{  
+  //           id:generateID(),
+
+  //           name:'Vinhos',
+  //           products:[{
+  //               id:generateID(),
+
+  //               name:'Vinho Santome', 
+  //               img:'assets/images/produtos/56.png',  
+  //               price:19,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Vinho Cantinho do Vale', 
+  //               img:'assets/images/produtos/57.png',  
+  //               price:6.5,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Vinho Catuaba Selvagem', 
+  //               img:'assets/images/produtos/vinhocatuaba.png',  
+  //               price:18,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Vinho Garrafa 1 L', 
+  //               img:'assets/images/produtos/vinhogarrafa1l.png',  
+  //               price:25,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Vinho Draft', 
+  //               img:'assets/images/produtos/vinhodraft.png',  
+  //               price:15,
+  //               quantidade:0,
+  //           }]    
+     
+  //       },{  
+  //           id:generateID(),
+
+  //           name:'Energéticos',
+  //           products:[{
+  //               id:generateID(),
+
+  //               name:'Energético Red Bull 250ml', 
+  //               img:'assets/images/produtos/energeticoredbull.png',  
+  //               price:12,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Energético Monster 473ml', 
+  //               img:'assets/images/produtos/energeticomonster.png',  
+  //               price:13,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Energético 2L', 
+  //               img:'assets/images/produtos/energetico2l.png',  
+  //               price:8.5,
+  //               quantidade:0,
+  //           }]    
+     
+  //       },{  
+  //           id:generateID(),
+
+  //           name:'Águas',
+  //           products:[{
+  //               id:generateID(),
+
+  //               name:'Água sem Gás 500ml', 
+  //               img:'assets/images/produtos/aguasemgas500ml.png',  
+  //               price:3,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Água sem Gás 1 L', 
+  //               img:'assets/images/produtos/aguasemgas1l.png',  
+  //               price:6,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Água com Gás 500ml', 
+  //               img:'assets/images/produtos/aguacomgas500ml.png',  
+  //               price:4,
+  //               quantidade:0,
+  //           }]    
+     
+        
+     
+  //   },{
+  //               "id": generateID(),  
+  //               "name": "Refrigerantes",
+  //               "products": [
+  //                   {
+  //                       "price": 5,
+  //                       "name": "Coca Cola Lata",
+  //                       "quantidade": 0,
+  //                       "id":generateID(),                        
+  //                       "img": "assets/images/produtos/cocalata.png"
+  //                   },
+  //                   {
+  //                       "quantidade": 0,
+  //                       "id":generateID(),                        
+  //                       "price": 5,
+  //                       "name": "Guaraná Lata",
+  //                       "img": "assets/images/produtos/guaranalata.png"
+  //                   },
+  //                   {
+  //                       "img": "assets/images/produtos/fantallata.png",
+  //                       "id":generateID(),                        
+  //                       "price": 5,
+  //                       "name": "Fanta Laranja Lata",
+  //                       "quantidade": 0
+  //                   },
+  //                   {
+  //                       "price": 5,
+  //                       "name": "Fanta Uva Lata",
+  //                       "img": "assets/images/produtos/fantaulata.png",
+  //                       "quantidade": 0,
+  //                       "id":generateID(),                   
+  //                     },
+  //                   {
+  //                       "img": "assets/images/produtos/tonicalata.png",
+  //                       "name": "Tônica Lata",
+  //                       "price": 5,
+  //                       "id":generateID(),                        
+  //                       "quantidade": 0
+  //                   },
+  //                   {
+  //                       "img": "assets/images/produtos/guarana1l.png",
+  //                       "quantidade": 0,
+  //                       "price": 6,
+  //                       "name": "Guaraná 1L",
+  //                       "id":generateID(),                   
+  //                     },
+  //                   {
+  //                       "img": "assets/images/produtos/coca2l.png",
+  //                       "price": 12,
+  //                       "id":generateID(),                        
+  //                       "name": "Coca 2L",
+  //                       "quantidade": 0
+  //                   },
+  //                   {
+  //                       "name": "Iti 2L",
+  //                       "quantidade": 0,
+  //                       "price": 6,
+  //                       "id":generateID(),
+  //                       "img": "assets/images/produtos/refriiti2l.png"
+  //                   },
+  //                   {
+  //                       "id": generateID(),
+  //                       "quantidade": 0,
+  //                       "name": "Fanta Laranja 2L",
+  //                       "img": "assets/images/produtos/refrifanta2l.png",
+  //                       "price": 10
+  //                   }
+  //               ]
+  //             },{
+  //               name:'Cervejas', 
+  //               "id": generateID(), 
+  //               products:[{
+  //               id:generateID(),
+
+  //               name:'Cerveja Heineken Long Neck', 
+  //               img:'assets/images/produtos/cervejaheilong.png',
+  //               price:8,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Corona Long Neck', 
+  //               img:'assets/images/produtos/cervejacoronalong.png', 
+  //               price:9,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Stella Long Neck', 
+  //               img:'assets/images/produtos/cervejastellalong.png', 
+  //               price:8,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Budweiser Long Neck', 
+  //               img:'assets/images/produtos/cervejabudlong.png',
+  //               price:7.5,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Skol Beets Long Neck', 
+  //               img:'assets/images/produtos/skolbeetslong.png',
+  //               price:12,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Beats GT Long Neck', 
+  //               img:'assets/images/produtos/gtbeets.png',
+  //               price:12.5,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Itaipava Malzbier Long Neck', 
+  //               img:'assets/images/produtos/cervejaitaipavalong.png', 
+  //               price:8,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Black Princess Long Neck', 
+  //               img:'assets/images/produtos/cervejablackprincess.png', 
+  //               price:15,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Heineken Lata', 
+  //               price:6.5, 
+  //               img:'assets/images/produtos/cervejaheilata.png',
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Itaipava Lata', 
+  //               price:4, 
+  //               img:'assets/images/produtos/cervejaitaipavalata.png',
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Brahma lata', 
+  //               price:4.5, 
+  //               img:'assets/images/produtos/cervejabrahmalata.png',
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Skol lata', 
+  //               price:4.5, 
+  //               img:'assets/images/produtos/cervejaskollata.png',
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Amstel Lata', 
+  //               price:5,
+  //               img:'assets/images/produtos/cervejaamstellata.png',
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Spaten Lata', 
+  //               price:6,
+  //               img:'assets/images/produtos/cervejaspatenlata.png',
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Petra Lata', 
+  //               img:'assets/images/produtos/cervejapetralata.png', 
+  //               price:5,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Império Lata', 
+  //               price:4.5,
+  //               img:'assets/images/produtos/cervejaimperiolata.png',
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Brahma Duplo Malte Lata', 
+  //               img:'assets/images/produtos/cervejabrahmaduplo.png', 
+  //               price:5, 
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Eisebahn lata', 
+  //               price:6.3, 
+  //               img:'assets/images/produtos/cervejaeisebahnlata.png',
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Skol Puro Malte lata', 
+  //               price:5, 
+  //               img:'assets/images/produtos/cervejaskolpurolata.png',
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Cerveja Original lata', 
+  //               price:6.5, 
+  //               img:'assets/images/produtos/cervejaoriginallata.png',
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Budweiser Lata', 
+  //               img:'assets/images/produtos/cervejabudlata.png', 
+  //               price:5,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Itaipava 0%', 
+  //               img:'assets/images/produtos/cervejaitaipava0.png', 
+  //               price:5,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Brahma 0%', 
+  //               img:'assets/images/produtos/cervejabrahma0.png', 
+  //               price:6,
+  //               quantidade:0,
+  //           }] 
+
+  //             },{
+  //               name:"Fardo Cerveja ",
+  //               "id": generateID(),  
+  //               products:[{
+  //               id:generateID(),
+
+  //               name:'Fardo Cerveja Heineken', 
+  //               img:'assets/images/produtos/fardoheineken.png',  
+  //               price:66,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Fardo Cerveja Itaipava', 
+  //               img:'assets/images/produtos/fardoitaipava.png',  
+  //               price:42,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Fardo Cerveja Brahma', 
+  //               img:'assets/images/produtos/fardobrahma.png',  
+  //               price:48,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Fardo Cerveja Skol', 
+  //               img:'assets/images/produtos/fardoskol.png',  
+  //               price:48,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Fardo Cerveja Amstel', 
+  //               img:'assets/images/produtos/fardoamstel.png',  
+  //               price:49,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Fardo Spaten', 
+  //               img:'assets/images/produtos/fardospaten.png',  
+  //               price:60,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Fardo Cerveja Petra', 
+  //               img:'assets/images/produtos/fardopetra.png',  
+  //               price:49,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Fardo Cerveja Império', 
+  //               img:'assets/images/produtos/fardoimperio.png',  
+  //               price:45.6,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Fardo Cerveja Brahma Duplo Malte', 
+  //               img:'assets/images/produtos/fardobrahmaduplo.png',  
+  //               price:48,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Fardo Cerveja Eisenbahn', 
+  //               img:'assets/images/produtos/fardiei.png',  
+  //               price:64,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Fardo Cerveja Skol Puro Malte', 
+  //               img:'assets/images/produtos/fardoskolpuromalte.png',  
+  //               price:48,
+  //               quantidade:0,
+  //           },{
+  //               id:generateID(),
+
+  //               name:'Fardo Cerveja Original', 
+  //               img:'assets/images/produtos/fardooriginal.png',  
+  //               price:64,
+  //               quantidade:0,
+  //           }]
+  //             },{
+  //               id: generateID(), 
+  //               name: "Doses",
+  //               products: [
+  //                   {
+  //                       name: "Dose Contine",
+  //                       id: generateID(),
+  //                       img: "assets/images/produtos/dosecontini.png",
+  //                       price: 13,
+  //                       quantidade: 0
+  //                   },
+  //                   {
+  //                       "img": "assets/images/produtos/dosedreher.png",
+  //                       name: "Dose Dreher",
+  //                       id: generateID(),
+  //                       quantidade: 0,
+  //                       price: 4
+  //                   },
+  //                   {
+  //                       name: "Dose Pitu",
+  //                       img: "assets/images/produtos/dosepitu.png",
+  //                       id: generateID(),
+  //                       price: 4,
+  //                       quantidade: 0
+  //                   },
+  //                   {
+  //                       quantidade: 0,
+  //                       img: "assets/images/produtos/dose51.png",
+  //                       id: generateID(),
+  //                       name: "Dose 51",
+  //                       price: 3
+  //                   },
+  //                   {
+  //                       img: "assets/images/produtos/dosejurupinga.png",
+  //                       id:generateID(),
+  //                       quantidade: 0,
+  //                       name: "Dose Jurupinga",
+  //                       price: 7
+  //                   },
+  //                   {
+  //                       quantidade: 0,
+  //                       name: "Dose São Francisco",
+  //                       price: 5,
+  //                       id: generateID(),
+  //                       img: "assets/images/produtos/dosesaofrancisco.png"
+  //                   },
+  //                   {
+  //                       id:generateID(),
+  //                       name: "Dose Velho Barreiro",
+  //                       quantidade: 0,
+  //                       price: 3,
+  //                       img: "assets/images/produtos/dosevelhobarreiro.png"
+  //                   },
+  //                   {
+  //                       price: 6,
+  //                       img: "assets/images/produtos/doseluizence.png",
+  //                       quantidade: 0,
+  //                       name: "Dose Luizence",
+  //                       id: generateID(),
+  //                   }
+  //               ]
+  //             },{
+                  
+  //               id:generateID(),
+
+  //               name:'Pinga',
+  //               products:[{
+  //                   id:generateID(),
+
+  //                   name:'51 Pinga 1L', 
+  //                   img:'assets/images/produtos/51.png',  
+  //                   price:17,
+  //                   quantidade:0,
+  //               },{
+  //                   id:generateID(),
+
+  //                   name:'51 Ice Long Neck', 
+  //                   img:'assets/images/produtos/pinga51long.png',  
+  //                   price:7.5,
+  //                   quantidade:0,
+  //               },{
+  //                   id:generateID(),
+
+  //                   name:'Pitu Pinga', 
+  //                   img:'assets/images/produtos/52.png',  
+  //                   price:18,
+  //                   quantidade:0,
+  //               },{
+  //                   id:generateID(),
+
+  //                   name:'Velho Barreiro', 
+  //                   img:'assets/images/produtos/53.png',  
+  //                   price:18,
+  //                   quantidade:0,
+  //               },{
+  //                   id:generateID(),
+
+  //                   name:'Corote', 
+  //                   img:'assets/images/produtos/54.png',  
+  //                   price:5.5,
+  //                   quantidade:0,
+  //               },{
+  //                   id:generateID(),
+
+  //                   name:'Dreher', 
+  //                   img:'assets/images/produtos/55.png',  
+  //                   price:18,
+  //                   quantidade:0,
+  //               },{
+  //                   id:generateID(),
+
+  //                   name:'Contini', 
+  //                   img:'assets/images/produtos/pingacontini.png',  
+  //                   price:35,
+  //                   quantidade:0,
+  //               },{
+  //                   id:generateID(),
+
+  //                   name:'Jurupinga', 
+  //                   img:'assets/images/produtos/pingajurupinga.png',  
+  //                   price:35,
+  //                   quantidade:0,
+  //               },{
+  //                   id:generateID(),
+
+  //                   name:'São Francisco', 
+  //                   img:'assets/images/produtos/pingasaofrancisco.png',  
+  //                   price:28,
+  //                   quantidade:0,
+  //               },{
+  //                   id:generateID(),
+
+  //                   name:'Luizence', 
+  //                   img:'assets/images/produtos/pingaluizence.png',  
+  //                   price:32,
+  //                   quantidade:0,
+  //               }]
+  //             },{
+  //               name:"Cigarros e Mais ",
+  //               "id": generateID(),  
+  //               products:[{
+                  
+  //                   id:generateID(),
+
+  //                   name:'Gudang Garan', 
+  //                   img:'assets/images/produtos/51.png',  
+  //                   price:1.5,
+  //                   quantidade:0,
+                   
+  //               },{
+  //               id:generateID(),
+
+  //               key:'',
+  //               name:'Gelo de Coco', 
+  //               img:'assets/images/produtos/gelococo.png',  
+  //               price:4,
+  //               quantidade:0, 
+  //           },{
+  //               id:generateID(),
+
+  //               key:'',
+  //               name:'Bala Halls', 
+  //               img:'assets/images/produtos/halls.png',  
+  //               price:3,
+  //               quantidade:0, 
+  //           }]
+
+  //             }
+  //       ],
+  //       "name": "Adega",
+  //       "id": generateID(),
+  //       "image2": "assets/images/glass.png",
+  //       "image": "assets/images/glass.png"
+  //   },
+  //   {
+  //       "key": "comer",
+  //       "image2": "assets/images/burguer.png",
+  //       "image": "assets/images/burguer.png",
+  //       "name": "Refeição",
+  //       "itens": [
+  //       {
+  //               "id":generateID(),              
+  //               "name": "Porções",
+  //               "products": [
+  //                   {
+  //                       "quantidade": 0,
+  //                       "name": "Porção Calabresa",
+  //                       "img": "assets/images/produtos/porcaodeCalabresa.png",
+  //                       "price": "30",
+  //                       "id":generateID(),                      
+  //                       "key": ""
+  //                   },
+  //                   {
+  //                       "quantidade": 0,
+  //                       "name": "Porção Picanha",
+  //                       "id":generateID(),                     "key": "",
+  //                       "price": "60",
+  //                       "img": "assets/images/produtos/porcaodePicanha.png"
+  //                   },
+  //                   {
+  //                       "name": "Porção Contra Filé",
+  //                       "quantidade": 0,
+  //                       "img": "assets/images/produtos/porcaodecontrafile.png",
+  //                       "key": "",
+  //                       "id":generateID(),                      "price": "40"
+  //                   },
+  //                   {
+  //                       "key": "",
+  //                       "name": "Porção Nuggets Frango",
+  //                       "quantidade": 0,
+  //                       "price": "20",
+  //                       "img": "assets/images/produtos/porcaodeNuggetsFrango.png",
+  //                       "id":generateID(),                 },
+  //                   {
+  //                       "name": "Porção Frango a Passarinho",
+  //                       "id":generateID(),                      "key": "",
+  //                       "price": "30000",
+  //                       "img": "assets/images/produtos/porcaodeFrangoPassarinho.png",
+  //                       "quantidade": 0
+  //                   },
+  //                   {
+  //                       "name": "Porção Grande Batata Frita",
+  //                       "quantidade": 0,
+  //                       "price": "30000",
+  //                       "img": "assets/images/produtos/FritasGrande.png",
+  //                       "id":generateID(),                      "key": ""
+  //                   },
+  //                   {
+  //                       "name": "Porção Pequena Batata Frita",
+  //                       "key": "",
+  //                       "price": "30000",
+  //                       "id":generateID(),                        "img": "assets/images/produtos/FritasPequena.png",
+  //                       "quantidade": 0
+  //                   }
+  //               ]
+  //           },{
+  //               "id":generateID(),              
+  //               "name": "Lanches",
+  //               "products": [
+  //                   {
+  //                       "quantidade": 0,
+  //                       "name": "Pão com linguiça",
+  //                       "img": "assets/images/produtos/LancheLinguica.png",
+  //                       "price": 30,
+  //                       "id":generateID(),                      
+  //                       "key": ""
+  //                   },
+  //                   {
+  //                       "quantidade": 0,
+  //                       "name": "Lanche de Picanha",
+  //                       "id":generateID(),                     "key": "",
+  //                       "price": "60",
+  //                       "img": "assets/images/produtos/LanchePicanha.png"
+  //                   },
+  //                   {
+  //                       "name": "Lanche de Contra Filé",
+  //                       "quantidade": 0,
+  //                       "img": "assets/images/produtos/lanchefile.png",
+  //                       "key": "",
+  //                       "id":generateID(),                      "price": "40"
+  //                   },
+                     
+                     
+                    
+  //               ]
+  //           },{
+  //             name:"Mais",
+  //             products:[{
+  //                               id:generateID(),
+
+  //               name:'Salgadinho Fofura', 
+  //               img:'assets/images/produtos/fofura.png',  
+  //               price:4, 
+  //               quantidade:0,
+  //           },{
+  //                               id:generateID(),
+
+  //               name:'Salgadinho Torcida', 
+  //               img:'assets/images/produtos/torcida.png',  
+  //               price:3, 
+  //               quantidade:0,
+
+  //           }]
+  //           }
+  //       ],
+  //       "id": generateID()
+  //   }
   //   ]
   //   })
 
@@ -885,7 +1271,7 @@ formupdateMenu.addEventListener('submit', function(e){
   setTimeout(function(){     
 
    msgLoadContainer.style.cssText='display:none;'
-  //  alert('Cardápio atualizado com Sucesso!')
+   alert('Cardápio atualizado com Sucesso!')
     
   }, 3000);
 

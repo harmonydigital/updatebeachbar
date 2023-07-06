@@ -1,10 +1,22 @@
  data=[]
 database=[]
 msgLoadContainer=document.getElementById('msgLoad')
-
 var apiContainer=document.getElementById('api') 
 var categoriesContainer=document.getElementById('categories') 
 STATUSMESA=false
+msgLoading=document.getElementById('msgLoading')
+btnSubmitformSalvar=document.getElementById('btnSalvar')
+console.log(document.getElementById('btnSalvar'))
+
+
+modalToggole=()=>{
+    modalElement=document.getElementById('modalcontainer') 
+    if(modalElement){ 
+        return modalElement.classList.toggle('show')
+    }else{
+        return console.log('modal não encontrado...')
+    }
+}
 
 fullScreen=()=>{
     var element = document.documentElement;
@@ -19,21 +31,14 @@ fullScreen=()=>{
         element.msRequestFullscreen();
     }
 } 
-data.map((cardBdmap)=>{
-        console.log(cardBdmap)
 
-    // cardBdmap.data.map((allDataBd)=>{
-    //     console.log("allDataBd")
-       
-    // })
-})
+
  getApi=(container,databd,referencia)=>{
     container.innerHTML =` <div class="tab"> </div>`;
     prods=""
-    getdatabd=databd 
-
-    console.log(databd)
+    getdatabd=databd  
     ref=referencia
+    catid=0
 
     if(data.length==0){
         getdatabd.map((databdMap)=>{
@@ -113,20 +118,28 @@ data.map((cardBdmap)=>{
            
             document.getElementById(apiData.id.toString()).innerHTML+= ` 
                
-                <div id="`+tabContentMap.id +`" class="tabcontent">  
+                <div id="`+tabContentMap.id +`" class="tabcontent">   
+                    <button key=`+tabContentMap.id +` onclick="createProd(event)" class='btn addProd'><i class="fa-solid fa-bottle-droplet"></i> ADICIONAR PRODUTOS EM `+tabContentMap.name    +` </button>  
+
                 </div>
+
+              
             `; 
+
             var Contentsubs=document.getElementById(tabContentMap.id)
            
           innitProd=tabContentMap.products.map((productsMap)=>{  
             prods+=productsMap 
+
                     Contentsubs.innerHTML+= `  
                         <div class="produto">
                                 <img src="`+productsMap.img +`" alt="" style="display:none;" ></img>
-                            <div class="prod-val">
+                          
+                                <div class="prod-val">
                                 <h3 class="title-prod">`+productsMap.name +`</h3> 
                                 <span class="valor">`+parseFloat(productsMap.price).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})+`</span>
                             </div>
+
                             <div class="editProd" >
                                 <button key="`+productsMap.id +`" onclick="editPrd(this,`+productsMap.id +`); "><i class="fa-regular fa-pen-to-square"></i></button>
                                 
@@ -135,13 +148,14 @@ data.map((cardBdmap)=>{
                                 </button>
               
                             </div>
+
                             <div class="quantidade" style="display:none;">
                                 <button key="`+productsMap.id +`" onclick="addProd(this,`+productsMap.id +`); ">+</button>
                                 <input  id="`+productsMap.id +`" value="`+productsMap.quantidade +`" type="text" placeholder="0">
                                 <button key="`+productsMap.id +`" onclick="removeProd(this,`+productsMap.id +`); ">-</button>
               
                             </div>
-                        </div> 
+                       
                         </div>
                     `;
 
@@ -153,14 +167,15 @@ data.map((cardBdmap)=>{
    
                 }) 
         }) 
+
+        
      }) 
 
-     openTable()
+     openTable(false)
     
  }
   
-//  categoriesContainer ? getApi(categoriesContainer) : console.log("..");
-
+ 
 
  var value = 0
 
@@ -199,29 +214,29 @@ data.map((cardBdmap)=>{
  
     var key=ProdThis.getAttribute('key')
      
-      input=document.getElementById(inputProd)
-      inputSearch=document.getElementById(inputProd+'search')
+    input=document.getElementById(inputProd)
+    inputSearch=document.getElementById(inputProd+'search')
       
   
-    data.map((apiData)=>{   
-        apiData.itens.map((itensMap)=>{     
-             itensMap.products.map((productsMap)=>{ 
-            
-           
-        
-              if(productsMap.id==key ){
-                productsMap.quantidade++
-                value=productsMap.quantidade 
-                input.setAttribute('value',value)
-                if(inputSearch){
-                    inputSearch.setAttribute('value',value)
+data.map((apiData)=>{   
+apiData.itens.map((itensMap)=>{     
+        itensMap.products.map((productsMap)=>{ 
+    
+    
 
-                }
-              }
-             }) 
+        if(productsMap.id==key ){
+        productsMap.quantidade++
+        value=productsMap.quantidade 
+        input.setAttribute('value',value)
+        if(inputSearch){
+            inputSearch.setAttribute('value',value)
+
+        }
+        }
         }) 
+}) 
 
-     }) 
+}) 
 
      
      refrashCart(inputProd)
@@ -229,46 +244,23 @@ data.map((cardBdmap)=>{
     
   }
 
-  editPrd=(ProdThis, inputProd)=>{
-  
-        var key=ProdThis.getAttribute('key')
-        var modal=document.querySelector('.modal-container')
-        modal.classList.toggle('show')
-        
-        inputNome=document.getElementById("m-nome")
-        inputCategory=document.getElementById("m-categoria")
-        inputPrice=document.getElementById("m-price")
-  
+  createProd=(event)=>{
 
-         
-          input=document.getElementById(inputProd)
-          inputSearch=document.getElementById(inputProd+'search')
-          
-      
-        data.map((apiData)=>{   
-            apiData.itens.map((itensMap)=>{     
-                 itensMap.products.map((productsMap)=>{ 
-                
-               
-            
-                  if(productsMap.id==key){
-                    
-                    inputNome.value=productsMap.name 
-                    inputPrice.value=productsMap.price
-                    if(inputSearch){
-                        inputSearch.setAttribute('value',value)
-    
-                    }
-                  }
-                 }) 
-            }) 
-    
-         })  
+    var submitbtn=document.getElementById('btnSalvar')   
+    const key=event.target.getAttribute('key')   
+    var h2Title=document.querySelector('.modal h2') 
+    // 
+    h2Title.innerHTML='Novo produto.'  
+    submitbtn.setAttribute('key',key) 
 
-  } 
-  
+    submitbtn.setAttribute('status','create')
+    //submitbtn
+    modalToggole()
 
-     
+  }
+ 
+ 
+   
   inputNome=document.getElementById("m-nome")
   inputCategory=document.getElementById("m-categoria")
   inputPrice=document.getElementById("m-price")
@@ -278,12 +270,17 @@ data.map((cardBdmap)=>{
    editPrd=(ProdThis, inputProd)=>{
  
         // conso.le.log(ProdThis, inputProd)
+        var h2Title=document.querySelector('.modal h2')
+        h2Title.innerHTML='Editar produto.'
+
         idProdThis=false
         var key=ProdThis.getAttribute('key')
         var modal=document.querySelector('.modal-container')
         modal.classList.toggle('show')
      
-         
+        var submitbtn=document.getElementById('btnSalvar')   
+
+        submitbtn.setAttribute('status','update')
           input=document.getElementById(inputProd)
           inputSearch=document.getElementById(inputProd+'search')
           
@@ -293,20 +290,24 @@ data.map((cardBdmap)=>{
                  itensMap.products.map((productsMap)=>{ 
                 
                
-            
+                //   ADIÇÃO
+                    
+                //   EDIÇÃO
                   if(productsMap.id==key ){
                     idProdThis=key
-                    inputNome.value=productsMap.name
-                    // inputCategory.value=productsMap.categoria
+                    inputNome.value=productsMap.name 
                     inputPrice.value=productsMap.price 
 
-
-                        console.log(productsMap.price,'productsMap.price ')
+ 
                     if(inputSearch){
                         inputSearch.setAttribute('value',value)
     
                     }
                   }
+
+
+
+
                  }) 
             }) 
     
@@ -315,39 +316,33 @@ data.map((cardBdmap)=>{
        
         
       
-
+        //  modalForm.addEventListener('submit',function(e){ 
+        //     e.preventDefault()
+        //     upDateProd()
+        // })
   } 
-
-  modalForm.addEventListener('submit',function(e){ 
-        e.preventDefault()
-        upDateProd()
-    })
+ 
+  
 
     upDateProd=()=>{
  
-         
-        var modal=document.querySelector('.modal-container')
-        modal.classList.toggle('show') 
-      
-        data.map((apiData)=>{   
+        msgLoading.classList.toggle('show')
+ 
+       
+        data.map((apiData)=>{     
             apiData.itens.map((itensMap)=>{     
-                 itensMap.products.map((productsMap)=>{  
-            
-                  if(productsMap.id==idProdThis){
-                     
-                        productsMap.name=inputNome.value
-                        // productsMap.price=parseInt(inputPrice.value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
-                        productsMap.price=inputPrice.value 
-
-                        console.log(productsMap.price,'productsMap.price ')
-                  }
+                 itensMap.products.map((productsMap)=>{    
+                        if(productsMap.id==idProdThis){ 
+                                productsMap.name=inputNome.value
+                                // productsMap.price=parseInt(inputPrice.value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+                                productsMap.price=inputPrice.value  
+                        }
+                    
                  }) 
             }) 
     
          }) 
-    
-       
-         console.log(data,'data ')
+     
          
          getApi(categoriesContainer,data, false)
         
@@ -390,46 +385,43 @@ data.map((cardBdmap)=>{
                 itensMap.products.map((productsMap)=>{ 
                 
     
-                if(productsMap.quantidade>0){
-                    cartQtd+=productsMap.quantidade
-                    itensTotal+=productsMap.quantidade
-                    prodMultiply=productsMap.price*productsMap.quantidade
-                    totalCart+=prodMultiply
-                    list+=productsMap.name 
-                    prodsSelct.push(productsMap)
-                    //  console.log(prodsSelct)
+                    if(productsMap.quantidade>0){
+                        
+                        cartQtd+=productsMap.quantidade
+                        itensTotal+=productsMap.quantidade
+                        prodMultiply=productsMap.price*productsMap.quantidade
+                        totalCart+=prodMultiply
+                        list+=productsMap.name 
+                        prodsSelct.push(productsMap) 
+                
+                        cartPreview.innerHTML= `    <div >     <button id="cartPreview" onclick="showCart()"><img src="assets/images/shopping-cart.png" alt=""></button> <span class="qtdIcon">`+cartQtd +` </span>   </div>  `;  
+                        cartContainer.innerHTML+= `  
+                        
+                        <div class="produto">
+                                        <img src="`+productsMap.img +`" alt="">
+                                    <div class="prod-val">
+                                        <h3 class="title-prod"> `+productsMap.name +` </h3> 
+                                        <span class="valor">`+prodMultiply.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) +` </span>
+                                    </div>
+                                    <div class="quantidade">
+                                            <button key="`+productsMap.id +`" onclick="addProd(this,`+productsMap.id +`); ">+</button>
+                                        <input  id="`+productsMap.id +`Cart" value="`+productsMap.quantidade +`" type="text" placeholder="0">
+                                        <button key="`+productsMap.id +`" onclick="removeProd(this,`+productsMap.id +`); ">-</button>
+                    
+                                    </div>
+                                    <button><img src="assets/images/trash.png" style="width: 20px; height: 21px;"></button>
 
-                    
-                    
-            
-                    cartPreview.innerHTML= `    <div >     <button id="cartPreview" onclick="showCart()"><img src="assets/images/shopping-cart.png" alt=""></button> <span class="qtdIcon">`+cartQtd +` </span>   </div>  `;  
-                    cartContainer.innerHTML+= `  
-                    
-                    <div class="produto">
-                                    <img src="`+productsMap.img +`" alt="">
-                                <div class="prod-val">
-                                    <h3 class="title-prod"> `+productsMap.name +` </h3> 
-                                    <span class="valor">`+prodMultiply.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) +` </span>
                                 </div>
-                                <div class="quantidade">
-                                        <button key="`+productsMap.id +`" onclick="addProd(this,`+productsMap.id +`); ">+</button>
-                                    <input  id="`+productsMap.id +`Cart" value="`+productsMap.quantidade +`" type="text" placeholder="0">
-                                    <button key="`+productsMap.id +`" onclick="removeProd(this,`+productsMap.id +`); ">-</button>
-                
-                                </div>
-                                <button><img src="assets/images/trash.png" style="width: 20px; height: 21px;"></button>
-
-                            </div>
-                            
-                    `;  
-                    // msg+=``+productsMap.quantidade +`,`+productsMap.name +`,`+prodMultiply.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) +`` 
-                
-                    url+=""+productsMap.quantidade+"un. / *"+productsMap.name+"* / " + prodMultiply.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
-                    +"%0a" // Dados do formulário
+                                
+                        `;  
+                        // msg+=``+productsMap.quantidade +`,`+productsMap.name +`,`+prodMultiply.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) +`` 
+                    
+                        url+=""+productsMap.quantidade+"un. / *"+productsMap.name+"* / " + prodMultiply.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+                        +"%0a" // Dados do formulário
 
 
-                }
-                
+                    }
+                    
                 
                 }) 
 
@@ -443,8 +435,7 @@ data.map((cardBdmap)=>{
        
         if(1==0){  
             // if(database.length>0){ 
-
-            console.log('2 compra') 
+ 
             lastOrderDoc=JSON.parse(localStorage.getItem("last"))
             
     
@@ -546,6 +537,61 @@ sendOrder=(event)=>{
     }
 }
 
+
+innerNewProd=()=>{
+
+    var key=document.getElementById('btnSalvar').getAttribute('key')
+    var newListProd = []
+        newProd={
+                id:Math.floor(Math.random() * 1000).toString(),
+                img:"assets/images/produtos/semfoto.png",
+                key: "",
+                name:inputNome.value, 
+                price:inputPrice.value,
+                quantidade:0
+            }
+ 
+        
+        data.forEach(apiData => { 
+            apiData.itens.forEach(element => {  
+                if(parseInt(element.id)===parseInt(key)){  
+
+                    element.products.forEach(ListProds => {    
+
+                        newListProd.push(ListProds)
+
+                    });
+
+                } 
+                
+            });
+        });
+
+        newListProd.push(newProd)
+        
+        data.forEach(apiData => { 
+            apiData.itens.forEach(element => {  
+                if(parseInt(element.id)===parseInt(key)){  
+                    element.products=newListProd
+                    
+
+                } 
+                
+            });
+        });
+        
+
+        getApi(categoriesContainer,data, false)
+        
+ } 
+updateNewProd=()=>{{
+   
+    var iname=document.getElementById('m-nome')
+    msgLoading.classList.toggle('show') 
+    
+     iname.value.length>0  ? innerNewProd() : alert('Preencha os campos..')
+}}
+
 closeCheckout=()=>{ 
     containerCheckout.classList.toggle("hide");
 }
@@ -554,14 +600,22 @@ closeCheckout=()=>{
     ///update
    
    
-    openTable=()=>{
+    openTable=(event)=>{
+
+       
+      
         setTimeout(function(){
     
             tabcontent = document.getElementsByClassName("tabcontent");
             tablinks = document.getElementsByClassName("tablinks");
+
+            if(event==false){
+ 
             tabcontent[0].style.cssText="display:block"
             tabcontent[1].style.cssText="display:block"
             tablinks[0].setAttribute("class", "tablinks active")
+
+
             var swiper = new Swiper(".mySwiperTabs", {
                 slidesPerView: 2,
                 cssMode: true,
@@ -570,10 +624,29 @@ closeCheckout=()=>{
                 disableOnInteraction: false,
                 },
                 
-                }); 
+            }); 
+            }else{
+               
+            }
+
+
+
         
         
-        }, 2000);
+        }, 500);
     }
  
   
+
+    btnSubmitformSalvar.addEventListener('click',(e)=>{
+        e.preventDefault()
+        attr=e.target.getAttribute('status')
+        //
+        msgLoading.classList.toggle('show') 
+
+        setTimeout(function(){ 
+            attr==='create' ? updateNewProd() : upDateProd() 
+       }, 500);
+        
+        modalToggole()
+    })

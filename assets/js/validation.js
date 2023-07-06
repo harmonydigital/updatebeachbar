@@ -48,7 +48,7 @@ function initApp(user){
     </div>
     <div style="padding: 0 15px; "> 
     <!-- <i class="fa-solid fa-user"></i> -->
-        Olá <strong>`+user +`</strong> bem-vindo!
+        Olá <strong>`+user +`</strong> 
     </div>
     <div style="position: absolute;top: 0;right: 0;margin: 30px;color: black; ">
       <button id="btnFullScreen" onclick="fullScreen()"><i style="color: black !important" class="fa-solid fa-expand"></i></button>
