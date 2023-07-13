@@ -72,10 +72,10 @@ button.tablinks .img2 {
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #f1710c;
+  background-color: #ff5400;
   color: white;
   font-weight: 700;
-  box-shadow: inset 3px 2px 5px #f1710c
+  box-shadow: inset 3px 2px 5px #ff5400
 
 }
 .categories .tab button {

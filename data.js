@@ -6,11 +6,10 @@ data = [{
   image2:'assets/images/IconComida-Orange.png',
       itens:[{ 
           id: generateID(),
-                    name:'Porções', 
+          name:'Porções', 
           products:[{
-              id: generateID(),
-              
-              name:'Porção Camarão Paulista', 
+              id: generateID(), 
+              name:'Porção Camarão Rosa no conhaque', 
               price:90, 
               img:'assets/images/produtos/camaraopaulista.png',
               quantidade:0,
